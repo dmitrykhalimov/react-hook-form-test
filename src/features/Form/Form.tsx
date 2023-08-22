@@ -82,10 +82,9 @@ function Form() {
         {errors.age && <p className="form__alert" role="alert">{errors.age?.message}</p>}
       </div>
       
-
       <div className='form__group'>
         <label>Напарник</label>
-        <select {...register("coworker" as any)}>
+        <select {...register("coworker")}>
           {generateCoworkerFields()};
         </select>
       </div>
@@ -97,7 +96,7 @@ function Form() {
           </div>
       </div>
 
-      <input type="submit" value={"Отправить"}/>
+      <input className='form__submit' type="submit" value={"Отправить"}/>
     </form>
   )
 }

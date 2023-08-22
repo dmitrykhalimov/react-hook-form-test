@@ -29,7 +29,7 @@
 }
 
 .form__group > label {
-  color: rgb(25, 16, 190);
+  color: rgb(1, 13, 144);
 }
 
 .form input, 
@@ -62,4 +62,9 @@
   margin-top: 10px;
   margin-bottom: 0px;
   padding: 5px;
+}
+
+.form__submit {
+  background-color: rgb(1, 13, 144);
+  color: white;
 }
