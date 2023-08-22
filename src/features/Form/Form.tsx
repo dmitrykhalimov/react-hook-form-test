@@ -95,7 +95,7 @@ function Form() {
           </div>
       </div>
 
-      <input className='form__submit' type="submit" value={"Отправить"}/>
+      <input className='form__submit' type="submit"/>
     </form>
   )
 }
