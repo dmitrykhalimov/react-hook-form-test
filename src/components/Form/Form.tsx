@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 type TCoworker = {
   [name: string]: {
@@ -9,7 +10,10 @@ type TCoworker = {
 }
 
 type TFilter = {
-  [sex: string]: string,
+  [sex: string]: {
+    name: string,
+    id: number,
+  },
 }
 
 const coworkerOptions: TCoworker = {
@@ -35,11 +39,45 @@ const coworkerOptions: TCoworker = {
   },
 }
 
+const filterOptions: TFilter = {
+  'all': {
+    name: 'Все',
+    id: 1
+  },
+  'male': {
+    name: 'Муж',
+    id: 2
+  },
+  'female': {
+    name: 'Жен',
+    id: 3
+  }
+}
+
 function Form() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
 
   console.log(watch("example")); // watch input value by passing the name of it
+
+  const generateCoworkerFields = () => {
+    return Object.keys(coworkerOptions).map((coworkerName) => {
+      const coworkerId = coworkerOptions[coworkerName].id
+      return <option key={coworkerId} value={coworkerId}>{coworkerName}</option>
+    })
+  }
+
+  const generateFilterFields = () => {
+    return Object.keys(filterOptions).map((radioName) => {
+      const {id, name} = filterOptions[radioName]
+      return (
+        <React.Fragment key={id}>
+          <label htmlFor={radioName}>{name}</label>
+          <input {...register("filter", { required: true })} type="radio" id={radioName} value={radioName} />
+        </React.Fragment>
+      )
+    })
+  }
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
@@ -57,22 +95,13 @@ function Form() {
       <div>
         <label>Напарник</label>
         <select {...register("coworker")}>
-          {Object.keys(coworkerOptions).map((key) => {
-            const coworkerId = coworkerOptions[key].id
-            return <option key={coworkerId} value={coworkerId}>{key}</option>
-          })}
+          {generateCoworkerFields()};
         </select>
       </div>
 
       <div>
         <label>Фильтр</label>
-
-        <label htmlFor="all">Все</label>
-        <input {...register("filter", { required: true })} type="radio" id="all" value="all" />
-        <label htmlFor="male">Муж</label>
-        <input {...register("filter", { required: true })} type="radio" id="male" value="male" />
-        <label htmlFor="female">Жен</label>
-        <input {...register("filter", { required: true })} type="radio" id="female" value="female" />
+          {generateFilterFields()}
       </div>
 
       <input type="submit" value={"Отправить"}/>
