@@ -57,7 +57,7 @@ const filterOptions: TFilter = {
 
 const schema = object({
   name: string().min(5),
-  age: number().min(0).max(5)
+  age: number().min(0).max(100)
 })
 
 function Form() {
@@ -95,7 +95,7 @@ function Form() {
       
       <div>
         <label>Возраст</label>
-        <input {...register("age")} />
+        <input {...register("age", {valueAsNumber: true})} />
       </div>
 
       <div>
