@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { object, string, number, date, InferType} from "yup";
 
 type TCoworker = {
   [name: string]: {
@@ -53,6 +53,11 @@ const filterOptions: TFilter = {
     id: 3
   }
 }
+
+const schema = object({
+  name: string().min(5),
+  age: number().min(0).max(5)
+})
 
 function Form() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
