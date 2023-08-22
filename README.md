@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Форма с использованием react-hook-form и yup
 
 Запуск приложения
 
