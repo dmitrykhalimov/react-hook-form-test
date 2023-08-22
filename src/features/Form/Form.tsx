@@ -13,7 +13,7 @@ const FilterTypes = {
   ALL: 'all',
   MALE: 'male',
   FEMALE: 'female',
-}
+} as const;
 
 type FormData = {
   name: string;
