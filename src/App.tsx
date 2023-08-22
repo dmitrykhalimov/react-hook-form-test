@@ -1,6 +1,8 @@
+import Form from './components/Form/Form';
+
 function App() {
   return (
-    <h1>hello react!</h1>
+    <Form />
   )
 }
 
