@@ -14,14 +14,28 @@ const FilterTypes = {
   FEMALE: 'female',
 }
 
+type FormData = {
+  name: string;
+  age: number;
+  filter: string;
+  coworker: string;
+};
+
+
+
 function Form() {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm({
-    resolver: yupResolver(formSchema)
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({
+    // нет идей как это быстро пофискить
+    resolver: yupResolver<any>(formSchema),
+    defaultValues: {
+      filter: FilterTypes.ALL,
+    }
   });
 
   let selectedOptions: TCoworker;
 
   const currentFilter = watch('filter' as any, 'all'); 
+  console.log(currentFilter);
 
   if (currentFilter === FilterTypes.ALL) {
     selectedOptions = coworkerOptions;

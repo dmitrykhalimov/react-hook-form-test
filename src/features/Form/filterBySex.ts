@@ -1,4 +1,4 @@
-import { TCoworker, TFilter} from '../../types/form';
+import { TCoworker } from '../../types/form';
 import { coworkerOptions } from '../Form/formFields';
 
 const filterBySex = (sex: string): TCoworker => {
