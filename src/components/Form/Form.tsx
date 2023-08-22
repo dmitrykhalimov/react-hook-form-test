@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-import { object, string, number, date, InferType, setLocale} from "yup";
+import { object, string, number, date, InferType} from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 type TCoworker = {
@@ -28,7 +28,7 @@ const coworkerOptions: TCoworker = {
   },
   'Ирина': {
     id: 3,
-    sex: 'male'
+    sex: 'female'
   },
   'Павел': {
     id: 4,
@@ -36,8 +36,19 @@ const coworkerOptions: TCoworker = {
   },
   'Мария': {
     id: 5,
-    sex: 'male'
+    sex: 'female'
   },
+}
+
+const filterBySex = (sex: string): TCoworker => {
+  const result = Object.keys(coworkerOptions)
+  .filter((name) => coworkerOptions[name].sex === sex)
+  .reduce((acc: TCoworker, item) => {
+    acc[item] = coworkerOptions[item];
+    return acc;
+  }, {})
+  
+  return result;
 }
 
 const filterOptions: TFilter = {
@@ -61,13 +72,28 @@ const schema = object({
 })
 
 function Form() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  let selectedOptions: TCoworker;
+
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
     resolver: yupResolver(schema)
   });
+
+  const currentFilter = watch('filter' as any, 'all'); 
+
+  switch (currentFilter) {
+    case('male'):
+      selectedOptions = filterBySex('male')
+      break;
+    case('female'):
+      selectedOptions = filterBySex('female')
+      break;
+    default:
+      selectedOptions = coworkerOptions;
+  }
   
   const generateCoworkerFields = () => {
-    return Object.keys(coworkerOptions).map((coworkerName) => {
-      const coworkerId = coworkerOptions[coworkerName].id
+    return Object.keys(selectedOptions).map((coworkerName) => {
+      const coworkerId = selectedOptions[coworkerName].id
       return <option key={coworkerId} value={coworkerId}>{coworkerName}</option>
     })
   }
