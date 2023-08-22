@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-import { object, string, number, date, InferType} from "yup";
+import { object, string, number, date, InferType, setLocale} from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 type TCoworker = {
@@ -56,8 +56,8 @@ const filterOptions: TFilter = {
 }
 
 const schema = object({
-  name: string().min(5),
-  age: number().min(0).max(100)
+  name: string().min(5, 'Имя пользователя должно быть более 5 символов'),
+  age: number().min(0, 'Возраст должен быть больше 0').max(100, 'Возраст должен быть меньше нуля')
 })
 
 function Form() {
@@ -91,11 +91,13 @@ function Form() {
       <div>
         <label>Имя</label>
         <input {...register("name")} />
+        {errors.name && <p role="alert">{errors.name?.message}</p>}
       </div>
       
       <div>
         <label>Возраст</label>
         <input {...register("age", {valueAsNumber: true})} />
+        {errors.age && <p role="alert">{errors.age?.message}</p>}
       </div>
 
       <div>
