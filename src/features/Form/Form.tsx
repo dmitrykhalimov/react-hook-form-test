@@ -8,6 +8,8 @@ import { filterOptions, coworkerOptions } from './formFields';
 import { filterBySex } from './filterBySex';
 import { formSchema } from './schema';
 
+import './form.scss';
+
 const FilterTypes = {
   ALL: 'all',
   MALE: 'male',
@@ -54,10 +56,10 @@ function Form() {
     return Object.keys(filterOptions).map((radioName) => {
       const {id, name} = filterOptions[radioName]
       return (
-        <React.Fragment key={id}>
-          <label htmlFor={radioName}>{name}</label>
+        <div className="form__radio-item" key={id}>
           <input {...register("filter", { required: true })} type="radio" id={radioName} value={radioName} />
-        </React.Fragment>
+          <label htmlFor={radioName}>{name}</label>
+        </div>
       )
     })
   }
@@ -67,29 +69,32 @@ function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <div className='form__group'>
         <label>Имя</label>
         <input type="text" {...register("name")} />
-        {errors.name && <p role="alert">{errors.name?.message}</p>}
+        {errors.name && <p className="form__alert" role="alert">{errors.name?.message}</p>}
       </div>
       
-      <div>
+      <div className='form__group'>
         <label>Возраст</label>
         <input type="number" {...register("age", {valueAsNumber: true})} />
-        {errors.age && <p role="alert">{errors.age?.message}</p>}
+        {errors.age && <p className="form__alert" role="alert">{errors.age?.message}</p>}
       </div>
+      
 
-      <div>
+      <div className='form__group'>
         <label>Напарник</label>
         <select {...register("coworker" as any)}>
           {generateCoworkerFields()};
         </select>
       </div>
 
-      <div>
+      <div className='form__group'>
         <label>Фильтр</label>
-          {generateFilterFields()}
+          <div className="form__radio-group">
+            {generateFilterFields()}
+          </div>
       </div>
 
       <input type="submit" value={"Отправить"}/>
