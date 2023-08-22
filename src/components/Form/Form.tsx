@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { object, string, number, date, InferType} from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type TCoworker = {
   [name: string]: {
@@ -60,11 +61,10 @@ const schema = object({
 })
 
 function Form() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-
-  console.log(watch("example")); // watch input value by passing the name of it
-
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+  
   const generateCoworkerFields = () => {
     return Object.keys(coworkerOptions).map((coworkerName) => {
       const coworkerId = coworkerOptions[coworkerName].id
@@ -78,28 +78,29 @@ function Form() {
       return (
         <React.Fragment key={id}>
           <label htmlFor={radioName}>{name}</label>
-          <input {...register("filter", { required: true })} type="radio" id={radioName} value={radioName} />
+          <input {...register("filter" as any, { required: true })} type="radio" id={radioName} value={radioName} />
         </React.Fragment>
       )
     })
   }
 
+  const onSubmit = data => console.log(data);
+
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>Имя</label>
-        <input defaultValue="test" {...register("name")} />
+        <input {...register("name")} />
       </div>
       
       <div>
         <label>Возраст</label>
-        <input defaultValue="test" {...register("age")} />
+        <input {...register("age")} />
       </div>
 
       <div>
         <label>Напарник</label>
-        <select {...register("coworker")}>
+        <select {...register("coworker" as any)}>
           {generateCoworkerFields()};
         </select>
       </div>
