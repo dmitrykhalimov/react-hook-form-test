@@ -1,94 +1,32 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-import { object, string, number, date, InferType} from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-type TCoworker = {
-  [name: string]: {
-    id: number,
-    sex: string,
-  }
-}
+import { TCoworker} from '../../types/form';
 
-type TFilter = {
-  [sex: string]: {
-    name: string,
-    id: number,
-  },
-}
+import { filterOptions, coworkerOptions } from './formFields';
+import { filterBySex } from './filterBySex';
+import { formSchema } from './schema';
 
-const coworkerOptions: TCoworker = {
-  'Андрей': {
-    id: 1,
-    sex: 'male'
-  },
-  'Сергей': {
-    id: 2,
-    sex: 'male'
-  },
-  'Ирина': {
-    id: 3,
-    sex: 'female'
-  },
-  'Павел': {
-    id: 4,
-    sex: 'male'
-  },
-  'Мария': {
-    id: 5,
-    sex: 'female'
-  },
+const FilterTypes = {
+  ALL: 'all',
+  MALE: 'male',
+  FEMALE: 'female',
 }
-
-const filterBySex = (sex: string): TCoworker => {
-  const result = Object.keys(coworkerOptions)
-  .filter((name) => coworkerOptions[name].sex === sex)
-  .reduce((acc: TCoworker, item) => {
-    acc[item] = coworkerOptions[item];
-    return acc;
-  }, {})
-  
-  return result;
-}
-
-const filterOptions: TFilter = {
-  'all': {
-    name: 'Все',
-    id: 1
-  },
-  'male': {
-    name: 'Муж',
-    id: 2
-  },
-  'female': {
-    name: 'Жен',
-    id: 3
-  }
-}
-
-const schema = object({
-  name: string().min(5, 'Имя пользователя должно быть более 5 символов'),
-  age: number().min(0, 'Возраст должен быть больше 0').max(100, 'Возраст должен быть меньше нуля')
-})
 
 function Form() {
-  let selectedOptions: TCoworker;
-
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(formSchema)
   });
+
+  let selectedOptions: TCoworker;
 
   const currentFilter = watch('filter' as any, 'all'); 
 
-  switch (currentFilter) {
-    case('male'):
-      selectedOptions = filterBySex('male')
-      break;
-    case('female'):
-      selectedOptions = filterBySex('female')
-      break;
-    default:
-      selectedOptions = coworkerOptions;
+  if (currentFilter === FilterTypes.ALL) {
+    selectedOptions = coworkerOptions;
+  } else {
+    selectedOptions = filterBySex(currentFilter);
   }
   
   const generateCoworkerFields = () => {
@@ -110,7 +48,9 @@ function Form() {
     })
   }
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data: any) => {
+    console.log(data)
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
