@@ -21,8 +21,6 @@ type FormData = {
   coworker: string;
 };
 
-
-
 function Form() {
   const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({
     // нет идей как это быстро пофискить
@@ -34,8 +32,7 @@ function Form() {
 
   let selectedOptions: TCoworker;
 
-  const currentFilter = watch('filter' as any, 'all'); 
-  console.log(currentFilter);
+  const currentFilter = watch('filter', 'all'); 
 
   if (currentFilter === FilterTypes.ALL) {
     selectedOptions = coworkerOptions;
@@ -43,14 +40,14 @@ function Form() {
     selectedOptions = filterBySex(currentFilter);
   }
   
-  const generateCoworkerFields = () => {
+  const generateCoworkerFields = (): JSX.Element[] => {
     return Object.keys(selectedOptions).map((coworkerName) => {
       const coworkerId = selectedOptions[coworkerName].id
       return <option key={coworkerId} value={coworkerId}>{coworkerName}</option>
     })
   }
 
-  const generateFilterFields = () => {
+  const generateFilterFields = (): JSX.Element[] => {
     return Object.keys(filterOptions).map((radioName) => {
       const {id, name} = filterOptions[radioName]
       return (
