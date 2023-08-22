@@ -32,7 +32,8 @@ function Form() {
 
   let selectedOptions: TCoworker;
 
-  const currentFilter = watch('filter', 'all'); 
+  // просмотр фильтра
+  const currentFilter = watch('filter'); 
 
   if (currentFilter === FilterTypes.ALL) {
     selectedOptions = coworkerOptions;
@@ -40,6 +41,7 @@ function Form() {
     selectedOptions = filterBySex(currentFilter);
   }
   
+  // сгенерировать список имен
   const generateCoworkerFields = (): JSX.Element[] => {
     return Object.keys(selectedOptions).map((coworkerName) => {
       const coworkerId = selectedOptions[coworkerName].id
@@ -47,19 +49,20 @@ function Form() {
     })
   }
 
+  // сгенерировать список фильтров
   const generateFilterFields = (): JSX.Element[] => {
     return Object.keys(filterOptions).map((radioName) => {
       const {id, name} = filterOptions[radioName]
       return (
         <React.Fragment key={id}>
           <label htmlFor={radioName}>{name}</label>
-          <input {...register("filter" as any, { required: true })} type="radio" id={radioName} value={radioName} />
+          <input {...register("filter", { required: true })} type="radio" id={radioName} value={radioName} />
         </React.Fragment>
       )
     })
   }
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormData) => {
     console.log(data)
   };
 
@@ -67,13 +70,13 @@ function Form() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>Имя</label>
-        <input {...register("name")} />
+        <input type="text" {...register("name")} />
         {errors.name && <p role="alert">{errors.name?.message}</p>}
       </div>
       
       <div>
         <label>Возраст</label>
-        <input {...register("age", {valueAsNumber: true})} />
+        <input type="number" {...register("age", {valueAsNumber: true})} />
         {errors.age && <p role="alert">{errors.age?.message}</p>}
       </div>
 
