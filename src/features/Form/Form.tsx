@@ -106,7 +106,7 @@ function Form() {
         <div className="form__radio-group">{generateFilterFields()}</div>
       </div>
 
-      <input className="form__submit" type="submit" />
+      <input className="form__submit" type="submit" value="Отправить" />
     </form>
   );
 }
