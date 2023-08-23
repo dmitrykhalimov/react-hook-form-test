@@ -36,11 +36,9 @@ function Form() {
   // просмотр фильтра
   const currentFilter = watch('filter'); 
 
-  if (currentFilter === FilterTypes.ALL) {
-    selectedOptions = coworkerOptions;
-  } else {
-    selectedOptions = filterBySex(currentFilter);
-  }
+  selectedOptions = (currentFilter === FilterTypes.ALL) 
+    ? coworkerOptions 
+    : selectedOptions = filterBySex(currentFilter);
   
   // сгенерировать список имен
   const generateCoworkerFields = (): JSX.Element[] => {
