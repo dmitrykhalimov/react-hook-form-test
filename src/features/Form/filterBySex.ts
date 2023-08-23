@@ -1,15 +1,15 @@
-import { TCoworker } from '../../types/form';
-import { coworkerOptions } from '../Form/formFields';
+import { TCoworker } from "../../types/form";
+import { coworkerOptions } from "../Form/formFields";
 
 const filterBySex = (sex: string): TCoworker => {
   const result = Object.keys(coworkerOptions)
-  .filter((name) => coworkerOptions[name].sex === sex)
-  .reduce((acc: TCoworker, item) => {
-    acc[item] = coworkerOptions[item];
-    return acc;
-  }, {})
-  
-  return result;
-}
+    .filter((name) => coworkerOptions[name].sex === sex)
+    .reduce((acc: TCoworker, item) => {
+      acc[item] = coworkerOptions[item];
+      return acc;
+    }, {});
 
-export {filterBySex}
+  return result;
+};
+
+export { filterBySex };

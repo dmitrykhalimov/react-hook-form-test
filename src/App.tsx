@@ -1,10 +1,8 @@
-import './app.scss'
-import FormPage from './pages/FormPage/FormPage';
+import "./app.scss";
+import FormPage from "./pages/FormPage/FormPage";
 
 function App() {
-  return (
-    <FormPage />
-  )
+  return <FormPage />;
 }
 
-export default App
+export default App;

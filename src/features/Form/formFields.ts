@@ -6,7 +6,6 @@ const FilterTypes = {
   FEMALE: 'female',
 } as const;
 
-
 const coworkerOptions: TCoworker = {
   'Андрей': {
     id: 1,
@@ -28,7 +27,7 @@ const coworkerOptions: TCoworker = {
     id: 5,
     sex: FilterTypes.FEMALE
   },
-}
+};
 
 const filterOptions: TFilter = {
   'all': {
@@ -43,6 +42,6 @@ const filterOptions: TFilter = {
     name: 'Жен',
     id: 3
   }
-}
+};
 
 export { coworkerOptions, filterOptions, FilterTypes };
