@@ -3,17 +3,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { TCoworker} from '../../types/form';
 
-import { filterOptions, coworkerOptions } from './formFields';
+import { filterOptions, coworkerOptions, FilterTypes } from './formFields';
 import { filterBySex } from './filterBySex';
 import { formSchema } from './schema';
 
 import './form.scss';
-
-const FilterTypes = {
-  ALL: 'all',
-  MALE: 'male',
-  FEMALE: 'female',
-} as const;
 
 type FormData = {
   name: string;

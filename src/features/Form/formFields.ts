@@ -1,25 +1,32 @@
 import { TCoworker, TFilter} from '../../types/form';
 
+const FilterTypes = {
+  ALL: 'all',
+  MALE: 'male',
+  FEMALE: 'female',
+} as const;
+
+
 const coworkerOptions: TCoworker = {
   'Андрей': {
     id: 1,
-    sex: 'male'
+    sex: FilterTypes.MALE
   },
   'Сергей': {
     id: 2,
-    sex: 'male'
-  },
-  'Ирина': {
-    id: 3,
-    sex: 'female'
+    sex: FilterTypes.MALE
   },
   'Павел': {
+    id: 3,
+    sex: FilterTypes.MALE
+  },
+  'Ирина': {
     id: 4,
-    sex: 'male'
+    sex: FilterTypes.FEMALE
   },
   'Мария': {
     id: 5,
-    sex: 'female'
+    sex: FilterTypes.FEMALE
   },
 }
 
@@ -38,4 +45,4 @@ const filterOptions: TFilter = {
   }
 }
 
-export { coworkerOptions, filterOptions };
+export { coworkerOptions, filterOptions, FilterTypes };
